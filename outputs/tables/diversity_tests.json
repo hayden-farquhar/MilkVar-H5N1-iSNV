@@ -1,0 +1,87 @@
+{
+  "h2_kruskal_wallis": {
+    "statistic": 69.4456467113552,
+    "p_value": 8.318967364006282e-16,
+    "significant_bonferroni": true,
+    "groups": {
+      "cattle": {
+        "n": 4415,
+        "median": 0.00018453183340961005,
+        "mean": 0.00024789958501154164
+      },
+      "feline": {
+        "n": 98,
+        "median": 7.869442396623247e-05,
+        "mean": 9.763549492261293e-05
+      },
+      "retail_milk": {
+        "n": 10,
+        "median": 5.5932545658883865e-06,
+        "mean": 1.738647147970616e-05
+      }
+    }
+  },
+  "h2_pairwise": {
+    "cattle_vs_feline": {
+      "u_statistic": 305244.0,
+      "p_value": 3.1889015619307482e-12,
+      "rank_biserial_r": -0.41097834377238995,
+      "r_ci_95": [
+        -0.47928217809826473,
+        -0.3365888917902908
+      ],
+      "n1": 4415,
+      "n2": 98
+    },
+    "cattle_vs_retail_milk": {
+      "u_statistic": 40619.0,
+      "p_value": 4.320792546575541e-06,
+      "rank_biserial_r": -0.8400453001132502,
+      "r_ci_95": [
+        -0.9180470736492485,
+        -0.7467270668176671
+      ],
+      "n1": 4415,
+      "n2": 10
+    },
+    "feline_vs_retail_milk": {
+      "u_statistic": 877.0,
+      "p_value": 4.188104785166162e-05,
+      "rank_biserial_r": -0.7897959183673469,
+      "r_ci_95": [
+        -0.9122448979591837,
+        -0.6000000000000001
+      ],
+      "n1": 98,
+      "n2": 10
+    }
+  },
+  "h3_wilcoxon_isnv": {
+    "statistic": 40541.5,
+    "p_value": 4.659325126370677e-06,
+    "significant_alpha05": true,
+    "cattle_median": 10.0,
+    "milk_median": 0.0,
+    "cattle_n": 4415,
+    "milk_n": 10
+  },
+  "entropy_kruskal_wallis": {
+    "statistic": 28.321651136029452,
+    "p_value": 7.079972920736587e-07,
+    "significant_bonferroni": true,
+    "groups": {
+      "cattle": {
+        "n": 4415,
+        "median": 0.10984399831404265
+      },
+      "feline": {
+        "n": 98,
+        "median": 0.07190452354165752
+      },
+      "retail_milk": {
+        "n": 10,
+        "median": 0.016276943095474904
+      }
+    }
+  }
+}

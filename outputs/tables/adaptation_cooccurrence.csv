@@ -1,0 +1,13 @@
+sample,n_sites,sites,host_category
+SRR28834930,2,"S05, S06",feline
+SRR29377849,2,"S01, S03",cattle
+SRR32254302,2,"S02, S05",cattle
+SRR32254303,2,"S02, S05",cattle
+SRR32254304,2,"S02, S05",cattle
+SRR32654100,2,"S02, S05",cattle
+SRR32654101,2,"S02, S05",cattle
+SRR32654103,2,"S02, S05",cattle
+SRR32654105,2,"S02, S05",cattle
+SRR33030014,2,"S02, S05",cattle
+SRR33476829,2,"S02, S05",cattle
+SRR35088969,2,"S02, S11",cattle

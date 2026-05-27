@@ -1,0 +1,14 @@
+{
+  "analysis_date": "2026-05-27",
+  "af_threshold": 0.03,
+  "depth_threshold": 100,
+  "bonferroni_k": 12,
+  "alpha_corrected": 0.004166666666666667,
+  "total_samples": 4559,
+  "sites_analysed": 11,
+  "sites_with_detections": 7,
+  "sites_significant": 7,
+  "total_detections": 283,
+  "total_subconsensus_detections": 52,
+  "multi_site_samples": 12
+}

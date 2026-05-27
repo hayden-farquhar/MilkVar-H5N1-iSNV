@@ -1,0 +1,20 @@
+{
+  "cattle_vs_feline_matched": {
+    "n_cattle": 98,
+    "n_feline": 98,
+    "cattle_median_depth": 1834.5,
+    "feline_median_depth": 2299.5,
+    "cattle_median_pi": 0.0001737480869224806,
+    "feline_median_pi": 7.869442396623247e-05,
+    "u_statistic": 6312.0,
+    "p_value": 0.0001437653880716366,
+    "rank_biserial_r": -0.3144523115368596
+  },
+  "cattle_vs_milk_matched": {
+    "n_cattle": 10,
+    "n_milk": 10,
+    "u_statistic": 75.0,
+    "p_value": 0.060533659971475466,
+    "rank_biserial_r": -0.5
+  }
+}

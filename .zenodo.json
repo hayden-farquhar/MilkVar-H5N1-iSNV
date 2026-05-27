@@ -1,0 +1,29 @@
+{
+  "title": "Analysis code: No receptor-binding domain adaptation detected in within-host H5N1 surveillance of 4,559 US dairy outbreak sequences",
+  "upload_type": "software",
+  "description": "Reproducibility code for a pre-registered, corpus-wide intrahost single-nucleotide variant (iSNV) analysis of all publicly available H5N1 cattle, feline-spillover, and retail-milk sequences on the NCBI Sequence Read Archive (4,559 samples). Includes dual-caller concordance pipeline, adaptation-site prevalence analysis, within-host diversity comparisons, and all figure generation scripts.",
+  "creators": [
+    {
+      "name": "Farquhar, Hayden",
+      "orcid": "0009-0002-6226-440X",
+      "affiliation": "Independent researcher"
+    }
+  ],
+  "license": "MIT",
+  "keywords": [
+    "H5N1",
+    "iSNV",
+    "within-host diversity",
+    "mammalian adaptation",
+    "dairy cattle",
+    "genomic surveillance",
+    "reproducibility"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "10.17605/OSF.IO/WY9FA",
+      "relation": "isSupplementTo",
+      "scheme": "doi"
+    }
+  ]
+}
