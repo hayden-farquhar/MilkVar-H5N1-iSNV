@@ -251,12 +251,17 @@ def analyse_site(variants: pd.DataFrame, coverage: pd.DataFrame,
         ci_low, ci_high = stats.binom.ppf(
             [ALPHA / 2, 1 - ALPHA / 2], n, prevalence
         ) / n if k > 0 else (0.0, 0.0)
-        # Clopper-Pearson exact CI
+        # Clopper-Pearson exact 95% CI.
+        # The k == 0 and k == n boundary cases must use the same confidence level as
+        # the interior case below (0.025 / 0.975). Using the Bonferroni-corrected
+        # ALPHA here instead would silently mix two confidence levels within a single
+        # column reported as a 95% CI, and would inflate the upper bound at exactly
+        # the zero-count sites where that bound carries the most interpretive weight.
         if k == 0:
             ci_low = 0.0
-            ci_high = 1 - (ALPHA / 2) ** (1 / n)
+            ci_high = 1 - 0.025 ** (1 / n)
         elif k == n:
-            ci_low = (ALPHA / 2) ** (1 / n)
+            ci_low = 0.025 ** (1 / n)
             ci_high = 1.0
         else:
             ci_low = stats.beta.ppf(0.025, k, n - k + 1)

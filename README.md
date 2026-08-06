@@ -100,8 +100,34 @@ python scripts/05_merge_results.py --results data/processed/vastai_results --man
 | `12_diversity_analysis.py` | 6 | Nucleotide diversity, entropy, iSNV counts; Kruskal-Wallis tests | Variants + coverage | Figure 3, diversity parquet, test results |
 | `13_figure_heatmap.py` | 5 | Figure 2: adaptation-site allele frequency heatmap | Detections + depths | `figure1_adaptation_heatmap.{png,tiff}` |
 | `14_figure_corpus_qc.py` | — | Figure 4: corpus composition and QC summary | Coverage + manifest | `figure3_corpus_qc.{png,tiff}` |
-| `15_figure_threshold.py` | 4 | Figure 1: threshold determination criteria plot | Hardcoded Phase 4 results | `figure4_threshold.{png,tiff}` |
+| `15_figure_threshold.py` | 4 | Figure 1: threshold determination criteria plot | Phase 4 results; C2 computed from variant table | `figure4_threshold.{png,tiff}` |
 | `16_figure_variant_density.py` | 6 | Suppl. Figure S1: genome-wide variant density profile | Sub-consensus variants | `figure_s1_variant_density.{png,tiff}` |
+| `17_genotype_stratification.py` | 5 | Stratify PB2-631/701 detections by genotype (B3.13 vs D1.1) | Detections + BioProject | `genotype_stratification_*.{csv,json}` |
+| `18_rebuild_corpus_variants.py` | 3 | Rebuild the concordant variant table under the corrected strand-bias filter | Per-caller outputs | `corpus_variants*.parquet`, `strandfix_delta.json` |
+| `19_sa2_sa5_sensitivity.py` | — | SA2-SA5: single-caller, stringent depth, platform, library strategy | Per-caller outputs + variants | `sa2_*.csv`, `sa2_sa5_summary.json` |
+| `20_sensitivity_analyses.py` | — | SA1, SA6, non-synonymous sensitivity, mixed-infection screen | Variants + diversity | `sa1_*.csv`, `sa6_*.json`, `sensitivity_all_nonsyn_*.csv`, `mixed_infection_flagged.csv` |
+| `21_tier2_exploratory_screen.py` | 5 | Pre-registered Tier 2 exploratory site screen | Variants + reference | `tier2_screen_*.{csv,json}` |
+| `22_build_table_s5.py` | — | Render Supplementary Table S5 | SA2-SA5 outputs | `table_s5_sa2_sa5.md` |
+| `23_build_table_s6_qc.py` | — | Render Supplementary Table S6; parameters parsed from the pipeline definitions | `config.yaml`, `rules/*.smk`, coverage | `table_s6_qc_metrics.{csv,md}` |
+| `_pipeline.py` | — | Loader giving scripts 17+ importable access to the numbered modules | — | — |
+
+Scripts 17 onward reuse the site definitions, codon classification, and caller
+parsers from the earlier stages via `_pipeline.py`, rather than restating them.
+The numeric prefixes document run order but are not valid Python module names,
+which is what the loader works around.
+
+### Note on version 2.0.0
+
+Release 2.0.0 corrects a defect in the strand-bias filter present in 1.0.0.
+iVar reports `REF_DP`/`ALT_DP` as total depth per allele and `REF_RV`/`ALT_RV`
+as the reverse-strand portion; both `04_concordance_filter.py` and
+`05_merge_results.py` passed the totals into Fisher's exact test as though they
+were forward-strand counts, which left the filter too permissive. Correcting it
+reclassified 16,067 of 289,054 concordant calls (5.6%), all in the same
+direction. `11_adaptation_analysis.py` additionally had the zero-count branch of
+its confidence-interval calculation using the Bonferroni alpha rather than the
+95% level used elsewhere. Results derived from 1.0.0 should not be used; see
+`strandfix_delta.json` for the full delta.
 
 ## Outputs
 

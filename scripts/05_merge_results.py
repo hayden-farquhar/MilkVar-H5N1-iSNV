@@ -71,10 +71,17 @@ def concordance(accession: str, variants_dir: Path) -> pd.DataFrame:
         return pd.DataFrame()
 
     def strand_bias_ok(row):
+        # iVar REF_DP/ALT_DP are TOTAL depth for the allele; REF_RV/ALT_RV are the
+        # reverse-strand portion of it. Forward = total - reverse. Passing the totals
+        # as the forward cells inflates each forward count by its own reverse count,
+        # which makes the two strands look more alike and leaves the filter far too
+        # permissive.
         try:
+            ref_rev = row.get('REF_RV', 0)
+            alt_rev = row.get('ALT_RV', 0)
             _, p = fisher_exact([
-                [row.get('REF_DP', 0), row.get('REF_RV', 0)],
-                [row.get('ALT_DP', 0), row.get('ALT_RV', 0)]
+                [row.get('REF_DP', 0) - ref_rev, ref_rev],
+                [row.get('ALT_DP', 0) - alt_rev, alt_rev]
             ])
             return p >= 0.001
         except Exception:

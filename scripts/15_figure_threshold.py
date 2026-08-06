@@ -14,11 +14,31 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 OUTPUT_DIR = PROJECT_ROOT / "outputs" / "figures"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-# Data from Phase 4 threshold determination (PROGRESS.md)
 THRESHOLDS = [1, 2, 3, 5]
+
+# C1 and C4 are properties of the Phase 4 validation harness (caller concordance
+# and synthetic spike-in sensitivity), not of the corpus variant table.
 CONCORDANCE = [45.5, 62.9, 72.2, 80.5]
-STRAND_BIAS = [5.5, 4.3, 3.3, 2.1]
 SPIKE_SENSITIVITY = [93.3, 93.3, 93.3, 46.7]  # V3 95:5 mixture
+
+
+def strand_bias_exclusion_rates():
+    """C2, derived from the corpus variant table rather than transcribed.
+
+    These values were previously hardcoded from PROGRESS.md and had drifted from
+    the data they described. Computing them here keeps the figure consistent with
+    the deposited variant table, including after the strand-bias filter correction.
+    """
+    import pandas as pd
+
+    variants = pd.read_parquet(PROJECT_ROOT / "results" / "corpus_variants.parquet")
+    return [
+        round(100 * (~variants[variants["af_mean"] >= t / 100]["passes_strand_bias"]).mean(), 1)
+        for t in THRESHOLDS
+    ]
+
+
+STRAND_BIAS = strand_bias_exclusion_rates()
 
 
 def main():
@@ -55,7 +75,8 @@ def main():
     ax1.set_xticks(THRESHOLDS)
     ax1.set_xlim(0.5, 5.5)
     ax1.set_ylim(0, 105)
-    ax1.legend(fontsize=9, loc="center left")
+    ax1.legend(fontsize=9, loc="upper center", bbox_to_anchor=(0.5, -0.12), ncol=3,
+               frameon=False)
     ax1.grid(True, alpha=0.2)
 
     plt.tight_layout()

@@ -19,7 +19,9 @@ def parse_ivar(path: Path) -> pd.DataFrame:
     """Parse iVar variants TSV output."""
     df = pd.read_csv(path, sep="\t")
     # iVar columns: REGION, POS, REF, ALT, REF_DP, REF_RV, ALT_DP, ALT_RV, ...
-    # REF_DP = ref forward, REF_RV = ref reverse, ALT_DP = alt forward, ALT_RV = alt reverse
+    # REF_DP and ALT_DP are TOTAL depth for that allele; REF_RV and ALT_RV are the
+    # reverse-strand portion of it. Forward-strand depth is therefore total - reverse.
+    # (Sanity check: REF_DP + ALT_DP == TOTAL_DP.)
     df = df.rename(columns={
         "REGION": "chrom",
         "POS": "pos",
@@ -27,11 +29,13 @@ def parse_ivar(path: Path) -> pd.DataFrame:
         "ALT": "alt",
         "ALT_FREQ": "af",
         "TOTAL_DP": "depth",
-        "ALT_DP": "alt_fwd",
         "ALT_RV": "alt_rev",
-        "REF_DP": "ref_fwd",
         "REF_RV": "ref_rev",
     })
+    df = df.assign(
+        ref_fwd=df["REF_DP"] - df["ref_rev"],
+        alt_fwd=df["ALT_DP"] - df["alt_rev"],
+    )
     # Filter to SNVs only (single nucleotide)
     df = df[df["ref"].str.len() == 1]
     df = df[df["alt"].str.len() == 1]
